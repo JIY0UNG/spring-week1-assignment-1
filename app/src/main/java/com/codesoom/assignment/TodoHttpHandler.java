@@ -33,8 +33,11 @@ public class TodoHttpHandler implements HttpHandler {
         String content = "";
         if(path.startsWith("/tasks")) { // path가 /tasks로 시작하는 요청들에 대한 처리
             content = handlePathTasks(method, path, body);
+            send(exchange, 200, content);
         }
+    }
 
+    private void send(HttpExchange exchange, int statusCode, String content) throws IOException {
         exchange.sendResponseHeaders(200, content.getBytes().length);
 
         // OutputStream 객체 생성 후 write()을 해줘야 클라이언트 측에 응답 내용이 전달됨
